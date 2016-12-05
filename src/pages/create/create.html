@@ -6,11 +6,11 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <form novalidate class="create-case-form">
+ <ion-content padding>
+<!--  <form novalidate class="create-case-form">
 
     <label>Type of case:
-      <select class="form-control" required ng-model="case.type">
+      <select class="form-control" required ng-model="case.type" name="type">
         <option value="rash">Rash</option>
         <option value="pimple">Pimple</option>
         <option value="other">Other</option>
@@ -18,7 +18,7 @@
     </label><br />
 
     <label>Where is it located?
-      <select class="form-control" required ng-model="case.type">
+      <select class="form-control" required ng-model="case.bodyPart" name="bodyPart">
         <option value="neck">neck</option>
         <option value="pimple">chest</option>
         <option value="other">shoulder</option>
@@ -31,16 +31,64 @@
       </select>
     </label><br />
 
-     <label>How long has the issue been? <input type="text" ng-model="case.duration" /> days</label><br />
+     <label>How long has the issue been? <input type="text" ng-model="case.duration" name="duration" /> days</label><br />
 
-     <label>Other details that might help? <textarea ng-model="case.description"></textarea></label><br />
+     <label>Other details that might help? <textarea ng-model="case.description" name="description"></textarea></label><br />
 
      <label>Pictures:</label><br />
      <button ion-button color="dark" (click)="takePicture()">Take a Picture</button><br />
 
-     <input type="submit" ng-click="create(case)" value="Submit" />
+     <input type="submit" ng-click="submitCaseForm" value="Submit" />
+   </form> -->
 
-     <img *ngFor="let img of images; let i = index" [src]="img" width="100px" />
+   <form [formGroup]="case" (ngSubmit)="submitCreateCaseForm()">
+     <ion-item>
+      <ion-label>Type of issue</ion-label>
+      <ion-select formControllerName="type">
+        <ion-option>Rash</ion-option>
+        <ion-option>Pimple</ion-option>
+        <ion-option>Other</ion-option>
+      </ion-select>
+     </ion-item>
+
+     <ion-item>
+       <ion-label>Where on body</ion-label>
+       <ion-select formControllerName="bodyPart">
+         <ion-option>neck</ion-option>
+         <ion-option>chest</ion-option>
+         <ion-option>shoulder</ion-option>
+         <ion-option>arm</ion-option>
+         <ion-option>hand</ion-option>
+         <ion-option>back</ion-option>
+         <ion-option>leg</ion-option>
+         <ion-option>foot</ion-option>
+         <ion-option>other</ion-option>
+       </ion-select>
+     </ion-item>
+
+     <ion-item>
+       <ion-label>Duration in days</ion-label>
+       <ion-input type="text" formControllerName="duration"></ion-input>
+     </ion-item>
+
+     <ion-item>
+       <ion-label>Other notes</ion-label>
+       <ion-textarea formControllerName="description"></ion-textarea>
+     </ion-item>
+
+     <ion-item>
+       <ion-label>
+         <button ion-button (click)="takePicture()" color="dark" icon-left>
+          <ion-icon name='camera'></ion-icon>
+          Pictures
+        </button> <br />
+        <img class="case-img" *ngFor="let img of images; let i = index" [src]="img" width="100px" />
+       </ion-label>
+     </ion-item>
+
+     <button ion-button round color="dark" type="submit" [disabled]="!case.valid">Submit</button>
 
    </form>
+
+
 </ion-content>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import {Camera} from 'ionic-native';
 
@@ -8,10 +9,23 @@ import {Camera} from 'ionic-native';
   selector: 'page-create',
   templateUrl: 'create.html'
 })
-export class CreatePage {
-  public images: string[] = [];
-  constructor(public navCtrl: NavController) {
 
+export class CreatePage {
+  case: FormGroup;
+  public images: string[] = [];
+
+  constructor(public navCtrl: NavController, private formBuilder: FormBuilder) {
+
+    this.case = formBuilder.group({
+      type: [''],
+      bodyPart: [''],
+      duration: [''],
+      description: [''],
+    });
+  }
+
+  submitCreateCaseForm () {
+    console.log(this.case)
   }
 
   takePicture() {
