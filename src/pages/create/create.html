@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Create a new case
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form novalidate class="create-case-form">
+
+    <label>Type of case:
+      <select class="form-control" required ng-model="case.type">
+        <option value="rash">Rash</option>
+        <option value="pimple">Pimple</option>
+        <option value="other">Other</option>
+      </select>
+    </label><br />
+
+    <label>Where is it located?
+      <select class="form-control" required ng-model="case.type">
+        <option value="neck">neck</option>
+        <option value="pimple">chest</option>
+        <option value="other">shoulder</option>
+        <option value="neck">arm</option>
+        <option value="pimple">hand</option>
+        <option value="other">back</option>
+        <option value="neck">leg</option>
+        <option value="pimple">foot</option>
+        <option value="other">other</option>
+      </select>
+    </label><br />
+
+     <label>How long has the issue been? <input type="text" ng-model="case.duration" /> days</label><br />
+
+     <label>Other details that might help? <textarea ng-model="case.description"></textarea></label><br />
+
+     <label>Pictures:</label><br />
+     <button ion-button color="dark" (click)="takePicture()">Take a Picture</button><br />
+
+     <input type="submit" ng-click="create(case)" value="Submit" />
+
+     <img *ngFor="let img of images; let i = index" [src]="img" width="100px" />
+
+   </form>
+</ion-content>
