@@ -7,44 +7,11 @@
 </ion-header>
 
  <ion-content padding>
-<!--  <form novalidate class="create-case-form">
 
-    <label>Type of case:
-      <select class="form-control" required ng-model="case.type" name="type">
-        <option value="rash">Rash</option>
-        <option value="pimple">Pimple</option>
-        <option value="other">Other</option>
-      </select>
-    </label><br />
-
-    <label>Where is it located?
-      <select class="form-control" required ng-model="case.bodyPart" name="bodyPart">
-        <option value="neck">neck</option>
-        <option value="pimple">chest</option>
-        <option value="other">shoulder</option>
-        <option value="neck">arm</option>
-        <option value="pimple">hand</option>
-        <option value="other">back</option>
-        <option value="neck">leg</option>
-        <option value="pimple">foot</option>
-        <option value="other">other</option>
-      </select>
-    </label><br />
-
-     <label>How long has the issue been? <input type="text" ng-model="case.duration" name="duration" /> days</label><br />
-
-     <label>Other details that might help? <textarea ng-model="case.description" name="description"></textarea></label><br />
-
-     <label>Pictures:</label><br />
-     <button ion-button color="dark" (click)="takePicture()">Take a Picture</button><br />
-
-     <input type="submit" ng-click="submitCaseForm" value="Submit" />
-   </form> -->
-
-   <form [formGroup]="case" (ngSubmit)="submitCreateCaseForm()">
+   <form [formGroup]="caseForm" (ngSubmit)="submitCreateCaseForm()">
      <ion-item>
       <ion-label>Type of issue</ion-label>
-      <ion-select formControllerName="type">
+      <ion-select formControlName="type">
         <ion-option>Rash</ion-option>
         <ion-option>Pimple</ion-option>
         <ion-option>Other</ion-option>
@@ -53,7 +20,7 @@
 
      <ion-item>
        <ion-label>Where on body</ion-label>
-       <ion-select formControllerName="bodyPart">
+       <ion-select formControlName="bodyPart">
          <ion-option>neck</ion-option>
          <ion-option>chest</ion-option>
          <ion-option>shoulder</ion-option>
@@ -68,12 +35,12 @@
 
      <ion-item>
        <ion-label>Duration in days</ion-label>
-       <ion-input type="text" formControllerName="duration"></ion-input>
+       <ion-input type="text" formControlName="durationDays"></ion-input>
      </ion-item>
 
      <ion-item>
        <ion-label>Other notes</ion-label>
-       <ion-textarea formControllerName="description"></ion-textarea>
+       <ion-textarea formControlName="description"></ion-textarea>
      </ion-item>
 
      <ion-item>
@@ -86,7 +53,7 @@
        </ion-label>
      </ion-item>
 
-     <button ion-button round color="dark" type="submit" [disabled]="!case.valid">Submit</button>
+     <button ion-button round color="dark" type="submit" [disabled]="!caseForm.valid">Submit</button>
 
    </form>
 

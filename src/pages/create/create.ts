@@ -5,27 +5,34 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import {Camera} from 'ionic-native';
 
+import {CaseService} from '../../providers/case-service';
+
 @Component({
   selector: 'page-create',
-  templateUrl: 'create.html'
+  templateUrl: 'create.html',
+  providers: [CaseService]
 })
 
 export class CreatePage {
-  case: FormGroup;
+  caseForm: FormGroup;
+  public people: any;
   public images: string[] = [];
 
-  constructor(public navCtrl: NavController, private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, private caseService: CaseService, private formBuilder: FormBuilder) {
 
-    this.case = formBuilder.group({
+    this.caseForm = formBuilder.group({
       type: [''],
       bodyPart: [''],
-      duration: [''],
+      durationDays: [''],
       description: [''],
     });
   }
 
+
   submitCreateCaseForm () {
-    console.log(this.case)
+    console.log(this.caseForm);
+    this.caseService.createCase(this.caseForm.value, this.images);
+
   }
 
   takePicture() {
