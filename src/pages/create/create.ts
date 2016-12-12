@@ -15,7 +15,7 @@ import {CaseService} from '../../providers/case-service';
 
 export class CreatePage {
   caseForm: FormGroup;
-  public people: any;
+
   public images: string[] = [];
 
   constructor(public navCtrl: NavController, private caseService: CaseService, private formBuilder: FormBuilder) {

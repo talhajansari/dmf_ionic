@@ -16,15 +16,26 @@ export class AuthService extends MainService {
     console.log('Hello authService Provider');
   }
 
-  loginUser(loginData) {
+  loginUser(loginData, cb: Function) {
     console.log('Logging user');
-    console.log(loginData);
     var data = {
       email: loginData.email,
       password: loginData.password,
       user_type: loginData.user_type
     };
-    super.postData('/login', data);
+    super.postData('/login', data)
+    .then(function(result: any) {
+      console.log(result);
+      if (result.error != null) {
+        // set/save the token here
+        cb(false, result.error);
+      }
+      if (result.success==true && result.datatoken!=null) {
+        console.log(result.token);
+        cb(true, null);
+      }
+        cb(false, null);
+    })
   }
 
 }

@@ -18,14 +18,18 @@ protected url: string = 'http://localhost:8080/api';
   }
 
   getPing() {
-    var results = this.getData('/ping');
-    return results;
-
+    this.getData('/ping')
+    .then(function(data) {
+      console.log(data);
+    })
   }
+  
   postPing() {
     var data = {email: 'test@email.com', password:'passw0rd'};
-    var results = this.postData('/ping', data);
-    return results;
+    this.postData('/ping', data)
+    .then(function(data) {
+       console.log(data);
+    })
 
   }
 
@@ -41,14 +45,12 @@ protected url: string = 'http://localhost:8080/api';
       // We're using Angular HTTP provider to request the data,
       // then on the response, it'll map the JSON data to a parsed JS object.
       // Next, we process the data and resolve the promise with the new data.
-      console.log(url);
       this.http.get(url)
         .map(res => res.json())
         .subscribe(data => {
           // we've got back the raw data, now generate the core schedule data
           // and save the data for later reference
-          var data = data.data;
-          console.log(data);
+          var data = data;
           resolve(data);
         });
     });
@@ -67,7 +69,6 @@ protected url: string = 'http://localhost:8080/api';
           // we've got back the raw data, now generate the core schedule data
           // and save the data for later reference
           var data = data;
-          console.log(data);
           resolve(data);
         });
     });

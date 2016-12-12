@@ -33,5 +33,9 @@
     <ion-buttons end>
       <button ion-button round color="dark" type="submit" [disabled]="!loginForm.valid">Login</button>
     </ion-buttons>
+
+    <ion-label class="invalid" *ngFor="let message of messages; let i =index" [innerHTML]="message">
+    </ion-label>
+    
   </form>
 </ion-content>
