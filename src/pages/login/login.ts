@@ -20,7 +20,7 @@ import { TabsPage } from '../tabs/tabs';
 export class LoginPage {
 
   loginForm: FormGroup;
-  public messages: any[] = [];
+  error_message: string;
 
   constructor(public navCtrl: NavController, private authService: AuthService, private formBuilder: FormBuilder) {
     this.loginForm = formBuilder.group({
@@ -32,21 +32,23 @@ export class LoginPage {
 
   ionViewDidLoad() {
     console.log('Hello LoginPage Page');
-    this.authService.getPing();
-    this.authService.postPing();
   }
 
   submitLoginForm() {
-    this.messages.push("Logging in");
+
+    var that = this;
+
     console.log('Submitting Login Form');
-    this.authService.loginUser(this.loginForm.value, function(isSuccess, err) {
-      if(isSuccess) {
-        // redirect
-        this.navCtrl.push(TabsPage);
-      } else if (err!=null) {
-        //this.messages.push(err);
+    
+    that.authService.loginUser(this.loginForm.value)
+    .then(function(result: any) {
+      console.log(result);
+      if (result.err != null) {
+        that.error_message = "We can't login at the time. Please try later.";
+      } else if (!result.success) {
+        that.error_message = "Please enter valid email and/or password";
       } else {
-        //this.messages.push("Login failed. Please try again");
+        that.navCtrl.push(TabsPage);
       }
     });
 
