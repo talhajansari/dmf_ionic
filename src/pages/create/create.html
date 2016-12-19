@@ -11,16 +11,16 @@
    <form [formGroup]="caseForm" (ngSubmit)="submitCreateCaseForm()">
      <ion-item>
       <ion-label>Type of issue</ion-label>
-      <ion-select formControlName="type">
-        <ion-option>Rash</ion-option>
-        <ion-option>Pimple</ion-option>
-        <ion-option>Other</ion-option>
+      <ion-select formControlName="case_type">
+        <ion-option value='rash'>Rash</ion-option>
+        <ion-option value='pimple'>Pimple</ion-option>
+        <ion-option value='other'>Other</ion-option>
       </ion-select>
      </ion-item>
 
      <ion-item>
        <ion-label>Where on body</ion-label>
-       <ion-select formControlName="bodyPart">
+       <ion-select formControlName="body_part">
          <ion-option>neck</ion-option>
          <ion-option>chest</ion-option>
          <ion-option>shoulder</ion-option>
@@ -35,7 +35,7 @@
 
      <ion-item>
        <ion-label>Duration in days</ion-label>
-       <ion-input type="text" formControlName="durationDays"></ion-input>
+       <ion-input type="text" formControlName="duration_days"></ion-input>
      </ion-item>
 
      <ion-item>

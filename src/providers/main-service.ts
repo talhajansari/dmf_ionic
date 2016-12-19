@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
+import { Storage } from '@ionic/storage';
+import { Config } from '../config';
 import 'rxjs/add/operator/map';
 
 /*
@@ -11,67 +13,118 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class MainService {
 
-protected url: string = 'http://localhost:8080/api';
 
-  constructor(protected http: Http ) {
-    console.log('MainService Provider Initialized');
+//protected url: string = 'http://100.8.202.32/api';
+protected url: string;
+
+protected storage: Storage = new Storage();
+
+
+  constructor(protected http: Http) {
+    
+    var config = new Config();
+    this.url = 'http://' + config.get('api_url');
+    console.log('MainService Provider Initialized at ' + this.url);
   }
 
-  getPing() {
-    this.getData('/ping')
-    .then(function(data) {
-      console.log(data);
-    })
-  }
-  
-  postPing() {
-    var data = {email: 'test@email.com', password:'passw0rd'};
-    this.postData('/ping', data)
-    .then(function(data) {
-       console.log(data);
-    })
+  // getPing() {
+  //   this.getData('/ping')
+  //   .then(function(data) {
+  //     console.log(data);
+  //   })
+  // }
 
+  // postPing() {
+  //   var data = {email: 'test@email.com', password:'passw0rd'};
+  //   this.postData('/ping', data)
+  //   .then(function(data) {
+  //      console.log(data);
+  //   })
+
+  // }
+
+  private setAuthorizationHeader(headers: Headers) {
+    this.storage.get('auth_token')
+     .then(function(value) {
+        headers.append('Content-TypeA', 'application/blah-bah');
+        headers.append('authorization', 'khgghjasgdjh');
+      //  console.log('Storage token:');
+      //  console.log(value);
+      //  if (value != null) {
+      //   console.log("Setting auth header:");
+      //   headers.append('Authorization', value);
+      // }
+     })
+    
   }
 
-  getData(endpoint: string) {
-    // if (this.data) {
-    //   // already loaded data
-    //   return Promise.resolve(this.data);
-    // }
+  getData(endpoint: string) :Promise<any> {
+    var that = this;
     var url = this.url + endpoint;
+    
+    
+    //this.setAuthorizationHeader(headers);
+    return this.storage.get('auth_token')
+    .then(function (value) {
 
-    // don't have the data yet
-    return new Promise(resolve => {
+      let headers = new Headers();
+
+      if (value != null) {
+        headers.append('Authorization', value);
+      }
+
+      // don't have the data yet
+      return new Promise(resolve => {
       // We're using Angular HTTP provider to request the data,
       // then on the response, it'll map the JSON data to a parsed JS object.
       // Next, we process the data and resolve the promise with the new data.
-      this.http.get(url)
+      this.http.get(url, {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           // we've got back the raw data, now generate the core schedule data
           // and save the data for later reference
           var data = data;
+          console.log(data);
           resolve(data);
         });
+      });
+      
     });
+    
+
+
   }
 
-  postData(endpoint: string, data: any) {
+  postData(endpoint: string, data: any) :Promise<any> {
+    var that = this;
     var url = this.url + endpoint;
-    // don't have the data yet
-    return new Promise(resolve => {
+    
+    return this.storage.get('auth_token')
+    .then (function(value) {
+      let headers = new Headers();
+
+      if (value != null) {
+        headers.append('Authorization', value);
+      }
+
+      return new Promise(resolve => {
       // We're using Angular HTTP provider to request the data,
       // then on the response, it'll map the JSON data to a parsed JS object.
       // Next, we process the data and resolve the promise with the new data.
-      this.http.post(url, data)
+      that.http.post(url, data, {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           // we've got back the raw data, now generate the core schedule data
           // and save the data for later reference
           var data = data;
+          console.log(data);
           resolve(data);
         });
+      });
+
     });
+    
+
   }
 
 }

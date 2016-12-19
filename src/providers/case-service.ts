@@ -16,17 +16,17 @@ export class CaseService extends MainService {
     console.log('Hello CaseService Provider');
   }
 
-  createCase(caseData, images) {
+  createCase(caseData, images): Promise<any> {
     console.log('Creating case');
     console.log(caseData);
     var data = {
-      type: caseData.type,
-      bodyPart: caseData.body_part,
-      durationDays: caseData.durationDays,
+      case_type: caseData.case_type,
+      body_part: caseData.body_part,
+      duration_days: caseData.duration_days,
       description: caseData.description,
       images: images
     }
-    super.postData('case/create', data)
+    return super.postData('/case/create', data)
   }
 
 }

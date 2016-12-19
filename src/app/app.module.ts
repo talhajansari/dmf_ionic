@@ -28,6 +28,9 @@ import { LoginPage } from '../pages/login/login';
     TabsPage,
     LoginPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Storage
+    ]
 })
 export class AppModule {}

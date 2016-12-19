@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
-import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {FormBuilder, FormGroup } from '@angular/forms';
 
 import {Camera} from 'ionic-native';
 
@@ -21,9 +21,9 @@ export class CreatePage {
   constructor(public navCtrl: NavController, private caseService: CaseService, private formBuilder: FormBuilder) {
 
     this.caseForm = formBuilder.group({
-      type: [''],
-      bodyPart: [''],
-      durationDays: [''],
+      case_type: [''],
+      body_part: [''],
+      duration_days: [''],
       description: [''],
     });
   }
